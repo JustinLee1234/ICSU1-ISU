@@ -1,0 +1,98 @@
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+
+public class Player {
+  
+  private int lives;
+  private int xStep;
+  private int yStep;
+  private int x ;
+  private int y;
+  private int w;
+  private int h;
+  private Image image;
+  
+  public Player(){
+    loadImage();
+  }
+  
+  private void loadImage(){
+    ImageIcon player = new ImageIcon("player.png");
+    image = player.getImage(); 
+        
+    w = image.getWidth();
+    h = image.getHeight();
+  }
+  public void move() {
+    
+    x += xStep;
+    y += yStep;
+  }
+  
+  public int getX() {
+    return x;
+  }
+  
+  public int getY() {
+    return y;
+  }
+  
+  public int getWidth() { 
+    return w;
+  }
+  
+  public int getHeight() {
+    return h;
+  }    
+  
+  public Image getImage() {
+    return image;
+  }
+  
+  public void keyPressed(KeyEvent e) {
+    int key = e.getKeyCode();
+    
+    if (key == KeyEvent.VK_LEFT) {
+      xStep = -2;
+    }
+    
+    if (key == KeyEvent.VK_RIGHT) {
+      xStep = 2;
+    }
+    
+    if (key == KeyEvent.VK_UP) {
+      yStep = -2;
+    }
+    
+    if (key == KeyEvent.VK_DOWN) {
+      yStep = 2;
+    }
+  }
+  
+  public void keyReleased(KeyEvent e) {
+    
+    int key = e.getKeyCode();
+    
+    if (key == KeyEvent.VK_LEFT) {
+      xStep = 0;
+    }
+    
+    if (key == KeyEvent.VK_RIGHT) {
+      xStep = 0;
+    }
+    
+    if (key == KeyEvent.VK_UP) {
+      yStep = 0;
+    }
+    
+    if (key == KeyEvent.VK_DOWN) {
+      yStep = 0;
+    }
+  }
+}
+
+
+  
+  
