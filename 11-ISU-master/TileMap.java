@@ -15,7 +15,7 @@ public class TileMap extends JFrame{
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     
   }
-  public void refresh() { 
+  public void refresh() { // Refresh the panel
     this.repaint();
   }
 }
