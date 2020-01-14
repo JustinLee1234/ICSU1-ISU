@@ -1,28 +1,87 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.Graphics2D;
+import javax.imageio.*;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class TilePanel extends JPanel{
   private char map[][];
-  private final int TILE_SIZE = 20;
+  private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
   private final int MAP_HEIGHT;
-  
-  public TilePanel(char[][] map, int width, int height){
+  private int x;
+  private int y;
+  private Player player;
+  private int spawnX;
+  private int spawnY;
+    
+  public TilePanel(char[][] map, int width, int height, Player p){
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
     this.MAP_HEIGHT = height;
+    this.addKeyListener(p);
+    this.setFocusable(true); //
+    this.grabFocus();
+ 
   }
   public void setMap(char[][] map){
     this.map = map;
   }
+  public void move(){
+    
+  }
   public void paintComponent(Graphics g){
+    BufferedImage playerSprite;
+    BufferedImage heartCanister;
+    BufferedImage emptyCanister;
+    
     super.repaint();
     setDoubleBuffered(true);
-    g.setColor(Color.BLUE);
-    g.fillRect(20, 20, 20, 20);
+    
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'x')
+          g.setColor(Color.DARK_GRAY);
+        else if (map[i][j] == '0')
+          g.setColor(Color.CYAN);
+        else if (map[i][j] == 'p')
+        {
+          g.setColor(Color.GREEN);
+          spawnX = j*TILE_SIZE;
+          spawnY = i*TILE_SIZE;
+        }
+        else if (map[i][j] == 's')
+          g.setColor(Color.GREEN);
+        else if (map[i][j] == 'g')
+          g.setColor(Color.RED);
+        
+        x = j*TILE_SIZE;
+        y = i*TILE_SIZE;
+        
+        g.fillRect(x, y, 50, 50);
+        g.setColor(Color.DARK_GRAY);
+        g.drawRect(x, y, 50, 50);
+      } 
+    }
+    try{ 
+      playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png"));
+      g.drawImage(playerSprite, spawnX, spawnY, TilePanel.this);
+      heartCanister = ImageIO.read(new File(".\\assets\\sprites\\heart.png"));
+      emptyCanister = ImageIO.read(new File(".\\assets\\sprites\\heartLost.png"));
+      for (int i = 1; i <= 5; i++){
+        g.drawImage(heartCanister, 105 - i*15, 5, TilePanel.this);
+      }
+    }
+    catch(Exception e){
+      System.out.println("Image file not found");
+    }
   }
 }

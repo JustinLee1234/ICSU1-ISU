@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.io.File;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 public class Main{
   
   public static void main(String[] args) throws Exception{ 
@@ -13,7 +15,7 @@ public class Main{
     char[][][] mapArray = new char[numMaps][height][width];
     String line;
     for (int map = 0;  map < numMaps; map++){
-      mapReader = new Scanner(new File("map" + (map+1) + ".txt"));
+      mapReader = new Scanner(new File("assets/maps/map" + (map+1) + ".txt"));
       for(int i = 0; i < height; i++) {
         line = mapReader.next();
         for(int j = 0; j < width; j++){
@@ -22,8 +24,10 @@ public class Main{
       }
       mapReader.close();
     }
-    TilePanel p = new TilePanel(mapArray[1], width, height);
+    Player player = new Player();
+    TilePanel p = new TilePanel(mapArray[0], width, height, player);
     TileMap t = new TileMap(p);
+    
       
       
     }

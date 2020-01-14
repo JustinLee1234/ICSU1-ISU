@@ -1,73 +1,47 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
-public class Player {
+
+public class Player extends Entity implements KeyListener {
   
   private int lives;
-  private int xStep;
-  private int yStep;
-  private int x ;
-  private int y;
-  private int w;
-  private int h;
-  private Image image;
+  private boolean colliding;
+  private boolean dead;
+  private BufferedImage sprite;
+  
   
   public Player(){
-    loadImage();
-  }
-  
-  private void loadImage(){
-    ImageIcon player = new ImageIcon("player.png");
-    image = player.getImage(); 
-        
-    w = image.getWidth();
-    h = image.getHeight();
-  }
-  public void move() {
     
-    x += xStep;
-    y += yStep;
+   
   }
-  
-  public int getX() {
-    return x;
-  }
-  
-  public int getY() {
-    return y;
-  }
-  
-  public int getWidth() { 
-    return w;
-  }
-  
-  public int getHeight() {
-    return h;
-  }    
-  
-  public Image getImage() {
-    return image;
+  public void keyTyped(KeyEvent e) {
+    
   }
   
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
     
     if (key == KeyEvent.VK_LEFT) {
-      xStep = -2;
+      this.setXStep(-2);
+      System.out.println("yeet left");
     }
     
     if (key == KeyEvent.VK_RIGHT) {
-      xStep = 2;
+      this.setXStep(2);
+      System.out.println("yeet right");
     }
     
     if (key == KeyEvent.VK_UP) {
-      yStep = -2;
+      this.setYStep(2);
+      System.out.println("yeet up");
     }
     
     if (key == KeyEvent.VK_DOWN) {
-      yStep = 2;
+      this.setYStep(-2);
+      System.out.println("yeet down");
     }
   }
   
@@ -76,23 +50,22 @@ public class Player {
     int key = e.getKeyCode();
     
     if (key == KeyEvent.VK_LEFT) {
-      xStep = 0;
+      this.setXStep(0);
     }
     
     if (key == KeyEvent.VK_RIGHT) {
-      xStep = 0;
+      this.setXStep(0);
     }
     
     if (key == KeyEvent.VK_UP) {
-      yStep = 0;
+      this.setYStep(0);
     }
     
     if (key == KeyEvent.VK_DOWN) {
-      yStep = 0;
+      this.setYStep(0);
     }
   }
 }
 
 
-  
-  
+
