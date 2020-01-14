@@ -9,6 +9,9 @@ public class Obstacles extends Entity {
 
   private String direction;
   
+  private int obstacleSpawnX;
+  private int obstacleSpawnY;
+  
   public Obstacles (int length, int width, String direction){  
     this.direction = direction;
 
