@@ -24,6 +24,7 @@ public class TilePanel extends JPanel{
   private static BufferedImage playerSprite;
   private static BufferedImage heartCanister;
   private static BufferedImage emptyCanister;
+  private static BufferedImage obstacle;
   
    
   public TilePanel(char[][] map, int width, int height, Player p){
@@ -46,6 +47,7 @@ public class TilePanel extends JPanel{
       playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png"));
       heartCanister = ImageIO.read(new File(".\\assets\\sprites\\heart.png"));
       emptyCanister = ImageIO.read(new File(".\\assets\\sprites\\heartLost.png"));
+      obstacle = ImageIO.read(new File (".\\assets\\sprites\\obstacle.png"));
     }
     catch(Exception e){
       System.out.println("Image file not found");
@@ -83,6 +85,8 @@ public class TilePanel extends JPanel{
       } 
     }
     g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null);
+    g.drawImage(obstacle,100,100,null);
+    
     for (int i = 1; i <= 5; i++){
       g.drawImage(heartCanister, 105 - i*15, 5, null);
       
