@@ -3,6 +3,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 
 public class Player extends Entity implements KeyListener {
@@ -14,57 +15,53 @@ public class Player extends Entity implements KeyListener {
   
   
   public Player(){
-  }
+  }  
   
   public void move(){
-    setX(getX() + getXStep());
-    setY(getY() + getYStep());
+    setX(getX() + (getXStep()));
+    setY(getY() + (getYStep()));
   }
   public void keyTyped(KeyEvent e) {
     
   }
   
   public void keyPressed(KeyEvent e) {
-    int key = e.getKeyCode();
+    int key = e.getKeyChar();
     
-    if (key == KeyEvent.VK_LEFT) {
+    if (key == 'a') {
       this.setXStep(-1);
-      System.out.println("yeet left");
     }
     
-    if (key == KeyEvent.VK_RIGHT) {
+    if (key == 'd') {
       this.setXStep(1);
-      System.out.println("yeet right");
     }
     
-    if (key == KeyEvent.VK_UP) {
+    if (key == 'w') {
       this.setYStep(-1);
-      System.out.println("yeet up");
     }
     
-    if (key == KeyEvent.VK_DOWN) {
+    if (key == 's') {
       this.setYStep(1);
-      System.out.println("yeet down");
     }
   }
   
   public void keyReleased(KeyEvent e) {
     
-    int key = e.getKeyCode();
+    int key = e.getKeyChar();
     
-    if (key == KeyEvent.VK_LEFT) {
+    if (key == 'a') {
       this.setXStep(0);
     }
     
-    if (key == KeyEvent.VK_RIGHT) {
+    if (key == 'd') {
       this.setXStep(0);
     }
     
-    if (key == KeyEvent.VK_UP) {
+    if (key == 'w') {
       this.setYStep(0);
     }
     
-    if (key == KeyEvent.VK_DOWN) {
+    if (key == 's') {
       this.setYStep(0);
     }
   }

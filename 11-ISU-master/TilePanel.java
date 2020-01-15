@@ -26,7 +26,7 @@ public class TilePanel extends JPanel{
   private static BufferedImage emptyCanister;
   private static BufferedImage obstacle;
   
-   
+  
   public TilePanel(char[][] map, int width, int height, Player p){
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
@@ -36,12 +36,12 @@ public class TilePanel extends JPanel{
     this.setFocusable(true); //
     this.grabFocus();
     this.player = p;
- 
+    
   }
   public void setMap(char[][] map){
     this.map = map;
   }
-
+  
   public static void loadImages(){
     try{ 
       playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png"));
@@ -91,5 +91,5 @@ public class TilePanel extends JPanel{
       g.drawImage(heartCanister, 105 - i*15, 5, null);
       
     }
-}
+  }
 }
