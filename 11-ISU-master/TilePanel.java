@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.awt.Rectangle;
 
-public class TilePanel extends JPanel{ //Class deals with tiles panel visuals
+public class TilePanel extends JPanel{ 
   private char map[][]; //Create private and public variables
   private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
