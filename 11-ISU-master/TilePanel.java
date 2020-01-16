@@ -31,7 +31,7 @@ public class TilePanel extends JPanel{
   public Rectangle tileRect;
   
   
-  public TilePanel(char[][] map, int width, int height, Player p){ // Method creates tile panel 
+  public TilePanel(char[][] map, int width, int height, Player p){ // Constructor creates tile panel 
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
@@ -70,7 +70,7 @@ public class TilePanel extends JPanel{
     }
   }
   
-  public void paintComponent(Graphics g){ //Paint background tiles according to the map
+  public void paintComponent(Graphics g){ //Paint everything
     
     super.repaint();
     setDoubleBuffered(true);
@@ -105,7 +105,7 @@ public class TilePanel extends JPanel{
         g.drawRect(tileX, tileY, 50, 50);
       } 
     }
-    g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null); // Draw the image of the character with the following coordinates
+    g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null); // Draw the image of the player with the following coordinates
     g.drawImage(obstacle,100,100,null);
     
     for (int i = 1; i <= player.getLives(); i++){ // Draw the images for the # lives left with the following coordinates
