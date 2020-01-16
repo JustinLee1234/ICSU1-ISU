@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
 
-public class Player extends Entity implements KeyListener { //Class deals with player 
+public class Player extends Entity implements KeyListener { 
   
   private int lives; //Create private and public variables
   private boolean dead;
