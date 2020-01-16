@@ -1,4 +1,4 @@
-import java.awt.image.BufferedImage; //import functions
+import java.awt.image.BufferedImage; //import classes
 import javax.imageio.*;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
