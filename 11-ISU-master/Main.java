@@ -1,4 +1,4 @@
-import java.util.Scanner; //Import functions
+import java.util.Scanner; //Import classes
 import java.io.File;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
