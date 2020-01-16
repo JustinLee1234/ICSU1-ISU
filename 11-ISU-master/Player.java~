@@ -3,66 +3,108 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 
 public class Player extends Entity implements KeyListener {
   
   private int lives;
-  private boolean colliding;
   private boolean dead;
   private BufferedImage sprite;
+  public boolean movingRight;
+  public boolean movingLeft;
+  public boolean movingUp;
+  public boolean movingDown;
+  public int count = 0;
   
   
   public Player(){
+    this.lives = lives;
+  }  
+  
+  public void setLives(int lives){
+    this.lives = lives;
+  }
+  public int getLives(){
+    return lives;
+  }
+  
+  
+  public void move(){
+    if (movingRight){
+      count++;
+      if ((count/4) == 1){
+        count = 0;
+        setX(getX() + 1);
+      }
+    }
+    if (movingLeft){
+      count++;
+      if ((count/4) == 1){
+        count = 0;
+        setX(getX() - 1);
+      }
+    }
+    if(movingUp){
+      count++;
+      if ((count/4) == 1){
+        count = 0;
+        setY(getY() - 1);
+      }
+    }
+    if(movingDown){
+      count++;
+      if ((count/4) == 1){
+        count = 0;
+        setY(getY() + 1 );
+      }
+    }
     
-   
+    //setX(getX() + (getXStep()));
+    //setY(getY() + (getYStep()));   
   }
   public void keyTyped(KeyEvent e) {
     
   }
   
   public void keyPressed(KeyEvent e) {
-    int key = e.getKeyCode();
+    int key = e.getKeyChar();
     
-    if (key == KeyEvent.VK_LEFT) {
-      this.setXStep(-2);
-      System.out.println("yeet left");
+    if (key == 'a') {
+      movingLeft = true;
     }
     
-    if (key == KeyEvent.VK_RIGHT) {
-      this.setXStep(2);
-      System.out.println("yeet right");
+    if (key == 'd') {
+      movingRight = true;
     }
     
-    if (key == KeyEvent.VK_UP) {
-      this.setYStep(2);
-      System.out.println("yeet up");
+    if (key == 'w') {
+      movingUp = true;
     }
     
-    if (key == KeyEvent.VK_DOWN) {
-      this.setYStep(-2);
-      System.out.println("yeet down");
+    if (key == 's') {
+      movingDown = true;
     }
   }
   
   public void keyReleased(KeyEvent e) {
     
-    int key = e.getKeyCode();
+    int key = e.getKeyChar();
     
-    if (key == KeyEvent.VK_LEFT) {
-      this.setXStep(0);
+    if (key == 'a') {
+      movingLeft = false;
     }
     
-    if (key == KeyEvent.VK_RIGHT) {
-      this.setXStep(0);
+    if (key == 'd') {
+      movingRight = false;
     }
     
-    if (key == KeyEvent.VK_UP) {
-      this.setYStep(0);
+    if (key == 'w') {
+      movingUp = false;
     }
     
-    if (key == KeyEvent.VK_DOWN) {
-      this.setYStep(0);
+    if (key == 's') {
+      movingDown = false;
     }
   }
 }

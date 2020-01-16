@@ -9,18 +9,54 @@ import java.awt.Rectangle;
 public class Player extends Entity implements KeyListener {
   
   private int lives;
-  private boolean colliding;
   private boolean dead;
   private BufferedImage sprite;
+  public boolean movingRight;
+  public boolean movingLeft;
+  public boolean movingUp;
+  public boolean movingDown;
+  public int count = 0;
   
   
   public Player(){
+    this.lives = lives;
   }  
   
-  public void move(){
-    setX(getX() + (getXStep()));
-    setY(getY() + (getYStep()));
+  public void setLives(int lives){
+    this.lives = lives;
   }
+  public int getLives(){
+    return lives;
+  }
+  
+  
+  public void move(){
+    boolean moving = false;
+    if (movingRight ||  movingLeft || movingUp || movingDown){
+      count++;
+      if ((count%8) == 0){
+        moving = true;
+      }
+    }
+    if (moving){
+      if (movingRight){
+        setX(getX() + 1);
+      }
+      if (movingLeft){
+        setX(getX() - 1);
+      }
+      if(movingUp){
+        setY(getY() - 1);
+      }
+      if(movingDown){
+        setY(getY() + 1 );
+      }
+  }
+  }
+  
+  //setX(getX() + (getXStep()));
+  //setY(getY() + (getYStep()));   
+  
   public void keyTyped(KeyEvent e) {
     
   }
@@ -29,19 +65,19 @@ public class Player extends Entity implements KeyListener {
     int key = e.getKeyChar();
     
     if (key == 'a') {
-      this.setXStep(-1);
+      movingLeft = true;
     }
     
     if (key == 'd') {
-      this.setXStep(1);
+      movingRight = true;
     }
     
     if (key == 'w') {
-      this.setYStep(-1);
+      movingUp = true;
     }
     
     if (key == 's') {
-      this.setYStep(1);
+      movingDown = true;
     }
   }
   
@@ -50,19 +86,19 @@ public class Player extends Entity implements KeyListener {
     int key = e.getKeyChar();
     
     if (key == 'a') {
-      this.setXStep(0);
+      movingLeft = false;
     }
     
     if (key == 'd') {
-      this.setXStep(0);
+      movingRight = false;
     }
     
     if (key == 'w') {
-      this.setYStep(0);
+      movingUp = false;
     }
     
     if (key == 's') {
-      this.setYStep(0);
+      movingDown = false;
     }
   }
 }

@@ -10,6 +10,7 @@ import javax.imageio.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.awt.Rectangle;
 
 public class TilePanel extends JPanel{
   private char map[][];
@@ -25,6 +26,9 @@ public class TilePanel extends JPanel{
   private static BufferedImage heartCanister;
   private static BufferedImage emptyCanister;
   private static BufferedImage obstacle;
+  public boolean collidable;
+  public Rectangle playerRect;
+  public Rectangle tileRect;
   
   
   public TilePanel(char[][] map, int width, int height, Player p){
@@ -38,10 +42,22 @@ public class TilePanel extends JPanel{
     this.player = p;
     
   }
+//public boolean colliding(){
+//    for(int i = 0; i<15;i++)  { 
+//      for(int j = 0; j<15;j++)  {
+//        if(map[i][j] == 'x'){ 
+//          if ((j*TILE_SIZE || (player.getY()/50) == i)
+//            return true;
+//          
+//        }
+//      }
+//    }
+//    return false;
+//  }
+
   public void setMap(char[][] map){
     this.map = map;
   }
-  
   public static void loadImages(){
     try{ 
       playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png"));
@@ -61,8 +77,12 @@ public class TilePanel extends JPanel{
     
     for(int i = 0; i<15;i++)  { 
       for(int j = 0; j<15;j++)  {
-        if (map[i][j] == 'x')
+        if (map[i][j] == 'x'){
+          //isCollidable();
           g.setColor(Color.DARK_GRAY);
+        }
+        else if (map[i][j] == 'z')
+          g.setColor(Color.PINK);
         else if (map[i][j] == '0')
           g.setColor(Color.CYAN);
         else if (map[i][j] == 'p')
@@ -79,6 +99,7 @@ public class TilePanel extends JPanel{
         tileX = j*TILE_SIZE;
         tileY = i*TILE_SIZE;
         
+        
         g.fillRect(tileX, tileY, 50, 50);
         g.setColor(Color.DARK_GRAY);
         g.drawRect(tileX, tileY, 50, 50);
@@ -87,7 +108,7 @@ public class TilePanel extends JPanel{
     g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null);
     g.drawImage(obstacle,100,100,null);
     
-    for (int i = 1; i <= 5; i++){
+    for (int i = 1; i <= player.getLives(); i++){
       g.drawImage(heartCanister, 105 - i*15, 5, null);
       
     }

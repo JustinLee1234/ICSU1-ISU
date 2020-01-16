@@ -14,9 +14,10 @@ public class Main{
     String line;
     boolean inPlay = true;
     Player player = new Player();
-    TilePanel p = new TilePanel(mapArray[0], width, height, player);
+    TilePanel p = new TilePanel(mapArray[4], width, height, player);
     TileMap t = new TileMap(p);
     p.loadImages();
+    
     while (inPlay){
       
       for (int map = 0;  map < numMaps; map++){
@@ -29,9 +30,8 @@ public class Main{
         }
         mapReader.close();
       }
-      player.move();
-      
-      
+      //if (p.colliding()){
+        player.move();
       
     }
   }
