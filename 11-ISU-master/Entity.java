@@ -1,19 +1,19 @@
-import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImage; //import functions
 import javax.imageio.*;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-public class Entity{
+public class Entity{ 
   
-  private int xStep;
+  private int xStep; // Setting variables 
   private int yStep;
   private int x ;
   private int y;
   private int w;
   private int h;
   
-  public Entity() { 
+  public Entity() { //methods get and set all the values
   } 
   
   public int getX() {  
