@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.awt.Color;
 
-public class TileMap extends JFrame{ //Class for tile map
+public class TileMap extends JFrame{ 
   
   public TileMap(TilePanel p) //Create tile panel
   {
