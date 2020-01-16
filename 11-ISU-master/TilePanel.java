@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.Color; // import functions
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.awt.Rectangle;
 
-public class TilePanel extends JPanel{
-  private char map[][];
+public class TilePanel extends JPanel{ //Class deals with tiles panel visuals
+  private char map[][]; //Create private and public variables
   private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
   private final int MAP_HEIGHT;
@@ -31,7 +31,7 @@ public class TilePanel extends JPanel{
   public Rectangle tileRect;
   
   
-  public TilePanel(char[][] map, int width, int height, Player p){
+  public TilePanel(char[][] map, int width, int height, Player p){ // Method creates tile panel 
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
@@ -55,30 +55,30 @@ public class TilePanel extends JPanel{
 //    return false;
 //  }
 
-  public void setMap(char[][] map){
+  public void setMap(char[][] map){ //calls the map
     this.map = map;
   }
-  public static void loadImages(){
+  public static void loadImages(){ //Load all images and visuals
     try{ 
       playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png"));
       heartCanister = ImageIO.read(new File(".\\assets\\sprites\\heart.png"));
       emptyCanister = ImageIO.read(new File(".\\assets\\sprites\\heartLost.png"));
       obstacle = ImageIO.read(new File (".\\assets\\sprites\\obstacle.png"));
     }
-    catch(Exception e){
+    catch(Exception e){ //If image is not found, let programmer know
       System.out.println("Image file not found");
     }
   }
   
-  public void paintComponent(Graphics g){
+  public void paintComponent(Graphics g){ //Paint background tiles according to the map
     
     super.repaint();
     setDoubleBuffered(true);
     
-    for(int i = 0; i<15;i++)  { 
-      for(int j = 0; j<15;j++)  {
-        if (map[i][j] == 'x'){
-          //isCollidable();
+    for(int i = 0; i<15;i++)  { // Go through the 15 columns 
+      for(int j = 0; j<15;j++)  { // Go through the 15 rows in each column
+        if (map[i][j] == 'x'){ // Depending on the character in the location identified, colour the tile block the set colour
+          //isCollidable(); 
           g.setColor(Color.DARK_GRAY);
         }
         else if (map[i][j] == 'z')
@@ -96,19 +96,19 @@ public class TilePanel extends JPanel{
         else if (map[i][j] == 'g')
           g.setColor(Color.RED);
         
-        tileX = j*TILE_SIZE;
-        tileY = i*TILE_SIZE;
+        tileX = j*TILE_SIZE; //The block coordinates
+        tileY = i*TILE_SIZE; //The coordinates change as more tiles are created
         
         
-        g.fillRect(tileX, tileY, 50, 50);
+        g.fillRect(tileX, tileY, 50, 50); //create the rectangle blocks
         g.setColor(Color.DARK_GRAY);
         g.drawRect(tileX, tileY, 50, 50);
       } 
     }
-    g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null);
+    g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null); // Draw the image of the character with the following coordinates
     g.drawImage(obstacle,100,100,null);
     
-    for (int i = 1; i <= player.getLives(); i++){
+    for (int i = 1; i <= player.getLives(); i++){ // Draw the images for the # lives left with the following coordinates
       g.drawImage(heartCanister, 105 - i*15, 5, null);
       
     }
