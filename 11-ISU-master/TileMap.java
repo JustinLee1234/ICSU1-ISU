@@ -1,4 +1,4 @@
-import java.io.File; //import function
+import java.io.File; //import classes
 import java.util.Scanner;
 import javax.swing.JFrame;
 import java.awt.Graphics;
