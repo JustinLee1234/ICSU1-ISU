@@ -1,4 +1,4 @@
-import java.awt.Graphics; //Import functions
+import java.awt.Graphics; //Import classes
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
