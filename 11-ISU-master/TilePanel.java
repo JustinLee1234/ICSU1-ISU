@@ -1,4 +1,4 @@
-import java.awt.Color; // import classes
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -10,10 +10,9 @@ import javax.imageio.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.awt.Rectangle;
 
-public class TilePanel extends JPanel{ 
-  private char map[][]; //Create private and public variables
+public class TilePanel extends JPanel{
+  private char map[][];
   private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
   private final int MAP_HEIGHT;
@@ -22,16 +21,21 @@ public class TilePanel extends JPanel{
   private Player player;
   private int spawnX;
   private int spawnY;
+  private int coinX;
+  private int coinY;
+  private int obstacleX;
+  private int obstacleY;
   private static BufferedImage playerSprite;
   private static BufferedImage heartCanister;
   private static BufferedImage emptyCanister;
   private static BufferedImage obstacle;
+  private static BufferedImage coin;
   public boolean collidable;
-  public Rectangle playerRect;
-  public Rectangle tileRect;
+
   
   
-  public TilePanel(char[][] map, int width, int height, Player p){ // Constructor creates tile panel 
+  
+  public TilePanel(char[][] map, int width, int height, Player p){
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
@@ -40,49 +44,98 @@ public class TilePanel extends JPanel{
     this.setFocusable(true); //
     this.grabFocus();
     this.player = p;
-    
   }
-//public boolean colliding(){
-//    for(int i = 0; i<15;i++)  { 
-//      for(int j = 0; j<15;j++)  {
-//        if(map[i][j] == 'x'){ 
-//          if ((j*TILE_SIZE || (player.getY()/50) == i)
-//            return true;
-//          
-//        }
-//      }
-//    }
-//    return false;
-//  }
-
-  public void setMap(char[][] map){ //calls the map
+  
+  public void setMap(char[][] map){
     this.map = map;
   }
-  public static void loadImages(){ //Load all images and visuals
+  ///***************MAKE INTO 1 METHOD*************///
+  public void checkTileCollision(){
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'x'){
+          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
+            if (player.getCurrentX() < j+1 && player.getCurrentX() > j){
+              player.setX((player.getX()+1));
+            }
+            else if (player.getCurrentX()+1 < j+1 && player.getCurrentX()+1 > j){
+              player.setX(player.getX()-1);
+            }
+            if (player.getCurrentY() < i+1 && player.getCurrentY() > i){
+              player.setY(player.getY()+1);
+            }
+            else if (player.getCurrentY()+1 < j+i && player.getCurrentY()+1 >i){
+              player.setY(player.getY()-1);
+            } 
+          }
+        }
+      }
+    }
+  }
+  public void checkGoalCollision(){
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'g'){
+          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
+           // System.out.println("goal reached"); //move onto next level
+          }
+        }
+      }
+    }
+  }
+  public void checkObstacleCollision(){
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'b'){
+          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
+           player.setX((int)spawnX/50);
+           player.setY((int)spawnY/50);
+          }
+        }
+      }
+    }
+  }
+  public void checkCoinCollision(){
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'c'){
+          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
+          }
+        }
+      }
+    }
+  }
+  //***********************************// 
+    
+  public static void loadImages(){
     try{ 
-      playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png"));
+      playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png")); 
       heartCanister = ImageIO.read(new File(".\\assets\\sprites\\heart.png"));
       emptyCanister = ImageIO.read(new File(".\\assets\\sprites\\heartLost.png"));
       obstacle = ImageIO.read(new File (".\\assets\\sprites\\obstacle.png"));
+      coin = ImageIO.read(new File(".\\assets\\sprites\\coin.png"));
     }
-    catch(Exception e){ //If image is not found, let programmer know
+    catch(Exception e){
       System.out.println("Image file not found");
     }
   }
   
-  public void paintComponent(Graphics g){ //Paint everything
+  public void paintComponent(Graphics g){
     
     super.repaint();
     setDoubleBuffered(true);
     
-    for(int i = 0; i<15;i++)  { // Go through the 15 columns 
-      for(int j = 0; j<15;j++)  { // Go through the 15 rows in each column
-        if (map[i][j] == 'x'){ // Depending on the character in the location identified, colour the tile block the set colour
-          //isCollidable(); 
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'x')
           g.setColor(Color.DARK_GRAY);
-        }
         else if (map[i][j] == 'z')
           g.setColor(Color.PINK);
+        else if (map[i][j] == 'b'){
+          g.setColor(Color.CYAN);
+          obstacleX = j* TILE_SIZE;
+          obstacleY = i * TILE_SIZE;
+        }
         else if (map[i][j] == '0')
           g.setColor(Color.CYAN);
         else if (map[i][j] == 'p')
@@ -93,24 +146,27 @@ public class TilePanel extends JPanel{
         }
         else if (map[i][j] == 's')
           g.setColor(Color.GREEN);
+        else if (map[i][j] == 'n')
+          g.setColor(Color.RED);
         else if (map[i][j] == 'g')
           g.setColor(Color.RED);
         
-        tileX = j*TILE_SIZE; //The block coordinates
-        tileY = i*TILE_SIZE; //The coordinates change as more tiles are created
-        
-        
-        g.fillRect(tileX, tileY, 50, 50); //create the rectangle blocks
+        tileX = j*TILE_SIZE;
+        tileY = i*TILE_SIZE;
+
+        g.fillRect(tileX, tileY, 50, 50);
         g.setColor(Color.DARK_GRAY);
         g.drawRect(tileX, tileY, 50, 50);
+        //g.drawImage(coin, coinX, coinY, null);
+        g.drawImage(obstacle, obstacleX, obstacleY, null);
       } 
     }
-    g.drawImage(playerSprite, spawnX +player.getX(), spawnY + player.getY(), null); // Draw the image of the player with the following coordinates
-    g.drawImage(obstacle,100,100,null);
+    player.setCurrentX((spawnX + player.getX())/50.0);
+    player.setCurrentY((spawnY + player.getY())/50.0);
+    g.drawImage(playerSprite, (int)(player.getCurrentX()*50), (int)(player.getCurrentY()*50), null);
     
-    for (int i = 1; i <= player.getLives(); i++){ // Draw the images for the # lives left with the following coordinates
+    for (int i = 1; i <= player.getLives(); i++){
       g.drawImage(heartCanister, 105 - i*15, 5, null);
-      
     }
   }
 }

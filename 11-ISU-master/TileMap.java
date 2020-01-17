@@ -1,12 +1,12 @@
-import java.io.File; //import classes
+import java.io.File;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.awt.Color;
 
-public class TileMap extends JFrame{ 
+public class TileMap extends JFrame{
   
-  public TileMap(TilePanel p) //Create tile panel
+  public TileMap(TilePanel p)
   {
     this.setTitle("Screen");
     this.setContentPane(p);
@@ -16,7 +16,7 @@ public class TileMap extends JFrame{
     
   }
   public void refresh() { 
-    this.repaint(); //display
+    this.repaint();
   }
 }
 

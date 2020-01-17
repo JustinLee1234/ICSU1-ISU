@@ -1,26 +1,28 @@
-import java.util.Scanner; //Import classes
+import java.util.Scanner;
 import java.io.File;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-public class Main{ // Main Class
+public class Main{
   
-  public static void main(String[] args) throws Exception{  
-    int lineCount = 0;    // Setting variables
+  public static void main(String[] args) throws Exception{ 
+    int lineCount = 0;    
     Scanner mapReader;
     int height = 15;
     int width = 15;
     int numMaps = 5;
+    boolean outOfBounds = false;
     char[][][] mapArray = new char[numMaps][height][width];
     String line;
     boolean inPlay = true;
     Player player = new Player();
-    TilePanel p = new TilePanel(mapArray[4], width, height, player);
+    TilePanel p = new TilePanel(mapArray[0], width, height, player);
     TileMap t = new TileMap(p);
     p.loadImages();
+    player.setLives(5);
     
-    while (inPlay){ 
+    while (inPlay){
       
-      for (int map = 0;  map < numMaps; map++){ //Goes through the different maps/ level layouts
+      for (int map = 0;  map < numMaps; map++){
         mapReader = new Scanner(new File("assets/maps/map" + (map+1) + ".txt"));
         for(int i = 0; i < height; i++) {
           line = mapReader.next();
@@ -30,9 +32,13 @@ public class Main{ // Main Class
         }
         mapReader.close();
       }
-      //if (p.colliding()){
-        player.move(); //Moves player
-      
-    }
+      p.checkTileCollision();
+      p.checkGoalCollision();
+      p.checkObstacleCollision();
+      p.checkCoinCollision();
+      player.move();
+    } 
   }
 }
+
+

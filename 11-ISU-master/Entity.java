@@ -1,21 +1,19 @@
-import java.awt.image.BufferedImage; //import classes
+import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-public class Entity{ 
-  
-  private int xStep; // Setting variables 
-  private int yStep;
-  private int x ;
+public class Entity{
+  //Private variables for abstract entity, these variables and methods will be shared with any class that extend entities
+  private int x;
   private int y;
   private int w;
   private int h;
   
-  public Entity() { //methods get and set all the values
+  public Entity() { //constructor is empty 
   } 
-  
+  //in order to access private variables, "getters" and "setters" are needed to return and assign values to the variables
   public int getX() {  
     return x;
   }
@@ -31,27 +29,13 @@ public class Entity{
   public int getHeight() {
     return h;
   }    
-  public int getXStep(){
-    return xStep;
-  }
-  public int getYStep(){
-    return yStep;
-  }
-  public void setXStep(int xStep){
-    this.xStep = xStep;
-  }
-  public void setYStep(int yStep){
-    this.yStep = yStep;
-  }
+
   public void setX(int x){
     this.x = x;
   }
   public void setY(int y){
     this.y = y;
   }
-  public void move(){
-    x += xStep;
-    y += yStep;
-  }
+
 }
 
