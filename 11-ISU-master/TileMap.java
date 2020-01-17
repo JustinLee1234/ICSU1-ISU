@@ -1,3 +1,7 @@
+//Tile Maps
+//Marian Wong and Justin Lee
+//Create the tile panel
+
 import java.io.File;
 import java.util.Scanner;
 import javax.swing.JFrame;
