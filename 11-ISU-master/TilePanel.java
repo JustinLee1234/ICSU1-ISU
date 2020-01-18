@@ -159,7 +159,6 @@ public class TilePanel extends JPanel{
       g2d.setColor(new Color(31, 21, 1));
       g2d.drawRect (220,480,300,80);
       g2d.setColor(new Color(225, 225, 225));
-      //g2d.setColor(new Color(255,175,175));
       g2d.fillRect(220,480,300,80);
       
       g2d.setColor(new Color(31, 21, 1));
