@@ -67,7 +67,7 @@ public class Player extends Entity implements KeyListener { //listens to keys pr
     }
     if (moving){ // depending on the key pressed, move the player in that direction
       if (movingRight){
-        setX(getX() + getStep());
+        setX(getX() + getStep()); //getters get the position of player and then adds a step or deducts
       }
       if (movingLeft){
         setX(getX() - getStep());
@@ -104,7 +104,7 @@ public class Player extends Entity implements KeyListener { //listens to keys pr
     if (key == 's') {
       movingDown = true;
     }
-    if (key == 'x'){
+    if (key == 'x'){ // getters that get the location of the player
       System.out.println(this.getCurrentX());
     }
     if (key == 'y'){
