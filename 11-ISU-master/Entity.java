@@ -1,6 +1,6 @@
 //Entity
 //Justin Lee and Marian Wong
-//Entity shares its variables and methods to classes extending to it and returns and assigns values to private variables
+//Entity shares its variables and methods and returns and assigns values
 
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
