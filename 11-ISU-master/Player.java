@@ -1,15 +1,15 @@
 //Player
 //Justin Lee and Marian Wong
 //Movement of the player
-import java.awt.Graphics;
+
+import java.awt.Graphics; //import classes
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
-
-public class Player extends Entity implements KeyListener {
+public class Player extends Entity implements KeyListener { //listens to keys pressed
   //most of the variables required by the player class
   private int lives;
   private boolean dead;
@@ -28,7 +28,7 @@ public class Player extends Entity implements KeyListener {
   public int count = 0;
   public Rectangle playerRect;
 
-  public Player(){
+  public Player(){ //Getters and setters for player variables
     this.lives = lives;
   }  
   
@@ -59,13 +59,13 @@ public class Player extends Entity implements KeyListener {
 
   public void move(){ 
     moving = false;
-    if (movingRight ||  movingLeft || movingUp || movingDown){
+    if (movingRight ||  movingLeft || movingUp || movingDown){ //if moving any direction is true, add one to count
       count++;
-      if ((count%8) == 0){
+      if ((count%8) == 0){ //controls the speed of the player
         moving = true;
       }
     }
-    if (moving){
+    if (moving){ // depending on the key pressed, move the player in that direction
       if (movingRight){
         setX(getX() + getStep());
       }
@@ -89,7 +89,7 @@ public class Player extends Entity implements KeyListener {
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyChar();
     
-    if (key == 'a') {
+    if (key == 'a') { // depending on the character of the key pressed, a certain direction becomes true
       movingLeft = true;
     }
     
@@ -114,7 +114,7 @@ public class Player extends Entity implements KeyListener {
   
   public void keyReleased(KeyEvent e) {
     
-    int key = e.getKeyChar();
+    int key = e.getKeyChar(); //if the key of the character is release, the player no longer moves in that direction
     
     if (key == 'a') {
       movingLeft = false;
