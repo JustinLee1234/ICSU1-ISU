@@ -51,11 +51,11 @@ public class TilePanel extends JPanel{
   private static BufferedImage backButtons;
   public boolean collidable;
 
-  public TilePanel(char[][] map, int width, int height, Player p){ //refers to variables
+  public TilePanel(char[][] map, int width, int height, Player p){ 
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
-    this.MAP_HEIGHT = height;
+    this.MAP_HEIGHT = height; //"this." refers to variables
     this.addKeyListener(p);
     this.setFocusable(true); //
     this.grabFocus();
