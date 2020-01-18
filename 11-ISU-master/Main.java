@@ -1,6 +1,6 @@
 //Main
 //Justin Lee and Marian Wong
-//Combines all the classes 
+//program execution start point 
 
 import java.util.Scanner; //import classes
 import java.io.File;
