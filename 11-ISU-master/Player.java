@@ -1,17 +1,14 @@
-//Player
-//Justin Lee and Marian Wong
-//Movement of the player
-
-import java.awt.Graphics; //import classes
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
-public class Player extends Entity implements KeyListener { //listens to keys pressed
+
+public class Player extends Entity implements KeyListener {
   //most of the variables required by the player class
-  private int lives;
+  private int lives = 5;
   private boolean dead;
   private BufferedImage sprite;
   private TileMap tileMap;
@@ -28,10 +25,10 @@ public class Player extends Entity implements KeyListener { //listens to keys pr
   public int count = 0;
   public Rectangle playerRect;
 
-  public Player(){ //Getters and setters for player variables
+  public Player(){
     this.lives = lives;
   }  
-  
+  //getters and setters for private variables
   public void setLives(int lives){
     this.lives = lives;
   }
@@ -57,17 +54,17 @@ public class Player extends Entity implements KeyListener { //listens to keys pr
     return step;
   }
 
-  public void move(){ 
-    moving = false;
-    if (movingRight ||  movingLeft || movingUp || movingDown){ //if moving any direction is true, add one to count
+  public void move(){  //moves the player
+    moving = false; // default is the player is not moving
+    if (movingRight ||  movingLeft || movingUp || movingDown){ //if a movement key is pressed
       count++;
-      if ((count%8) == 0){ //controls the speed of the player
+      if ((count%8) == 0){ //moving is set to true every count of 8 in order to prevent super speed
         moving = true;
       }
     }
-    if (moving){ // depending on the key pressed, move the player in that direction
+    if (moving){ //when its moving, it moves in the coresponding direction to whatever key was pressed
       if (movingRight){
-        setX(getX() + getStep()); //getters get the position of player and then adds a step or deducts
+        setX(getX() + getStep());
       }
       if (movingLeft){
         setX(getX() - getStep());
@@ -86,10 +83,10 @@ public class Player extends Entity implements KeyListener { //listens to keys pr
     
   }
   
-  public void keyPressed(KeyEvent e) {
+  public void keyPressed(KeyEvent e) { //detect key press, each letter changes a boolean to true to represent direction
     int key = e.getKeyChar();
     
-    if (key == 'a') { // depending on the character of the key pressed, a certain direction becomes true
+    if (key == 'a') {
       movingLeft = true;
     }
     
@@ -104,17 +101,20 @@ public class Player extends Entity implements KeyListener { //listens to keys pr
     if (key == 's') {
       movingDown = true;
     }
-    if (key == 'x'){ // getters that get the location of the player
+    if (key == 'x'){ //debugging keys
       System.out.println(this.getCurrentX());
     }
     if (key == 'y'){
       System.out.println(this.getCurrentY());
     }
+    if (key == 'l'){
+      System.out.println(this.getLives());
+    }
   }
   
   public void keyReleased(KeyEvent e) {
     
-    int key = e.getKeyChar(); //if the key of the character is release, the player no longer moves in that direction
+    int key = e.getKeyChar();
     
     if (key == 'a') {
       movingLeft = false;

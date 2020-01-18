@@ -5,20 +5,32 @@ import java.awt.event.KeyListener;
 public class Main{
   
   public static void main(String[] args) throws Exception{ 
+    long startTime = 0;
+    long endTime = 0;
+    long elapsedSeconds;
+    long elapsedMinutes;
     int lineCount = 0;    
     Scanner mapReader;
     int height = 15;
     int width = 15;
     int numMaps = 5;
+    int mapNum = 0;
     char[][][] mapArray = new char[numMaps][height][width];
     String line;
-    boolean inPlay = true;
+    boolean inPlay = false;
+    boolean gameOver = false;
+    boolean mainMenu = true;
     Player player = new Player();
-    TilePanel p = new TilePanel(mapArray[0], width, height, player);
-    TileMap t = new TileMap(p);
+    TilePanel p = new TilePanel(mapArray[mapNum], width, height, player);
+    GameFrame g = new GameFrame(p);
     p.loadImages();
+    player.setLives(5);
     
-    while (inPlay){
+    
+    while(p.home){
+    }
+    startTime = System.currentTimeMillis(); 
+    while (p.levels){
       
       for (int map = 0;  map < numMaps; map++){
         mapReader = new Scanner(new File("assets/maps/map" + (map+1) + ".txt"));
@@ -30,7 +42,21 @@ public class Main{
         }
         mapReader.close();
       }
+      p.checkCollision();
       player.move();
+      if (p.coinCount == 30){
+        p.levels = false;
+        gameOver = true;
+        endTime = System.currentTimeMillis();
+      }
+      
+    }
+    if (gameOver){
+      int seconds = (int)(endTime - startTime)/1000;
+      int minutes = 60%seconds;
+      System.out.println("That took " + minutes + " minutes and " + seconds + " seconds");
     }
   }
 }
+
+

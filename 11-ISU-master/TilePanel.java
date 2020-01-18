@@ -1,8 +1,4 @@
-//Tile Panel
-//Justin Lee and Marian Wong
-//Creates the tile panel and visuals
-
-import java.awt.Color; //import classes
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -14,50 +10,51 @@ import javax.imageio.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
-
- import javax.swing.*;   //contains all "J" Components
- import java.awt.*; 
- import java.awt.event.*; 
-
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent; 
 
 public class TilePanel extends JPanel{
-  private char map[][]; //set and call variables and image variables
+  ///MAP VARIABLES///
+  private char map[][];
   private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
   private final int MAP_HEIGHT;
+  ///TILE VARIABLES///
   private int tileX;
   private int tileY;
+  ///PLAYER VARIABLES///
   private Player player;
   private int spawnX;
   private int spawnY;
-  private int coinX;
-  private int coinY;
+  ///OBSTACLE VARIABLES///
   private int obstacleX;
   private int obstacleY;
-  private boolean home;
-  private boolean instructions;
-  private boolean levels;
+  ///BOOLEANS///
+  public boolean home;
+  public boolean instructions;
+  public boolean levels;
+  ///IMAGES///
   private static BufferedImage playerSprite;
   private static BufferedImage heartCanister;
   private static BufferedImage emptyCanister;
   private static BufferedImage obstacle;
   private static BufferedImage coin;
-  private static BufferedImage homeBg;
-  private static BufferedImage buttonTxt;
-  private static BufferedImage instructionButtonTxt;
-  private static BufferedImage titleTxt;
-  private static BufferedImage instructionPanel;
-  private static BufferedImage backButtons;
-  public boolean collidable;
-
-  public TilePanel(char[][] map, int width, int height, Player p){ 
+  ///COIN VARIABLES///
+  public int coinX;
+  public int coinY;
+  public int coinCount = 0;
+  public boolean validLocation = true;
+  public boolean visibleCoin = true;
+  public boolean gameVisible = false;
+  
+  
+  public TilePanel(char[][] map, int width, int height, Player p){
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
-    this.MAP_HEIGHT = height; //"this." refers to variables
+    this.MAP_HEIGHT = height;
     this.addKeyListener(p);
-    this.setFocusable(true); //
+    this.setFocusable(true); 
     this.grabFocus();
     this.player = p;
   }
@@ -65,12 +62,24 @@ public class TilePanel extends JPanel{
   public void setMap(char[][] map){
     this.map = map;
   }
-  ///***************MAKE INTO 1 METHOD*************///
-  public void checkTileCollision(){ //prevent player from crossing game border
-    for(int i = 0; i<15;i++)  { //go through the map and look for "x" char, player cannot move past "x" char
-      for(int j = 0; j<15;j++)  { //looks for location of player
-        if (map[i][j] == 'x'){
-          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
+  ///GENERATE COIN CORDINATES///
+  public int generateCoinX() {
+    int r = (int) (Math.random()*15); //take a random number between 0 and 15 
+    coinX = r;
+    return coinX;
+  }
+  public int generateCoinY(){
+    int r = (int) (Math.random()*15);
+    coinY = r;
+    return coinY;
+  }
+  
+  public void checkCollision(){
+    for(int i = 0; i<15;i++)  { 
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'x'){ //check each character in the map to see if it is an x
+          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){ //check to see if the players x and y are the same as the obstacles x and y
+            //check each condition to see which side the player is colliding on, and move the player the oposite way
             if (player.getCurrentX() < j+1 && player.getCurrentX() > j){
               player.setX((player.getX()+1));
             }
@@ -87,169 +96,101 @@ public class TilePanel extends JPanel{
         }
       }
     }
-  }
-  public void checkGoalCollision(){ // check for location of player and if it collides with goal
     for(int i = 0; i<15;i++)  { 
       for(int j = 0; j<15;j++)  {
-        if (map[i][j] == 'g'){
+        if (map[i][j] == 'b'){ //check the collision the same way
           if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
-           // System.out.println("goal reached"); //move onto next level
+            player.setX((int)spawnX/50); //if collision is detected, return to spawn point
+            player.setY((int)spawnY/50);
           }
         }
       }
-    }
+    }  
   }
-  public void checkObstacleCollision(){// check for location of player and if it collides with obstacle and brings it back to starting position
-    for(int i = 0; i<15;i++)  { 
-      for(int j = 0; j<15;j++)  {
-        if (map[i][j] == 'b'){
-          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
-           player.setX((int)spawnX/50);
-           player.setY((int)spawnY/50);
-          }
-        }
-      }
-    }
-  }
-  public void checkCoinCollision(){// check for location of player and if it collides with coins
-    for(int i = 0; i<15;i++)  { 
-      for(int j = 0; j<15;j++)  {
-        if (map[i][j] == 'c'){
-          if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
-          }
-        }
-      }
-    }
-  }
-  //***********************************// 
-    
-  public static void loadImages(){ //loading all images
+  
+  
+  public static void loadImages(){//load images for usage
     try{ 
       playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png")); 
       heartCanister = ImageIO.read(new File(".\\assets\\sprites\\heart.png"));
       emptyCanister = ImageIO.read(new File(".\\assets\\sprites\\heartLost.png"));
       obstacle = ImageIO.read(new File (".\\assets\\sprites\\obstacle.png"));
       coin = ImageIO.read(new File(".\\assets\\sprites\\coin.png"));
-      homeBg = ImageIO.read(new File(".\\assets\\sprites\\homeScreen.png"));
-      buttonTxt = ImageIO.read(new File(".\\assets\\sprites\\buttonTxt.png"));
-      instructionButtonTxt = ImageIO.read(new File(".\\assets\\sprites\\instructionButtonTxt.png"));
-      titleTxt = ImageIO.read(new File(".\\assets\\sprites\\titleTxt.png"));
-      instructionPanel = ImageIO.read(new File(".\\assets\\sprites\\instructionPanel.png"));
-      backButtons = ImageIO.read(new File(".\\assets\\sprites\\backButtons.png"));
     }
     catch(Exception e){
-      System.out.println("Image file not found"); //if file not found, let programmer know
+      System.out.println("Image file not found");
     }
   }
   
-  public void paintComponent(Graphics g){ 
-    super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D) g;
-    JFrame Frame = new JFrame();
-    
+  public void paintComponent(Graphics g){
     super.repaint();
     setDoubleBuffered(true);
     
-    home = false; //changes screen
-    instructions = true;
-    levels = false;
-
-    if (home == true){ //home screen images and shapes
-      g2d.drawImage(homeBg,0,0, null);
-      
-      g2d.setColor(new Color(31, 21, 1));
-      g2d.drawRect (220,480,300,80);
-      g2d.setColor(new Color(225, 225, 225));
-      g2d.fillRect(220,480,300,80);
-      
-      g2d.setColor(new Color(31, 21, 1));
-      g2d.drawRect (570,370,160,50);
-      g2d.setColor(new Color(225, 225, 225));
-      g2d.fillRect(570,370,160,50);
-      
-      g2d.setColor(new Color(31, 21, 1));
-      g2d.drawRect (570,451,160,50);
-      g2d.setColor(new Color(225, 225, 225));
-      g2d.fillRect(570,451,160,50);
-      
-      g2d.setColor(new Color(31, 21, 1));
-      g2d.drawRect (570,524,160,50);
-      g2d.setColor(new Color(225, 225, 225));
-      g2d.fillRect(570,524,160,50);
-      
-      g2d.setColor(new Color(31, 21, 1));
-      g2d.drawRect (570,600,160,50);
-      g2d.setColor(new Color(225, 225, 225));
-      g2d.fillRect(570,600,160,50);
-      
-      g2d.setColor(new Color(31, 21, 1));
-      g2d.drawRect (570,675,160,50);
-      g2d.setColor(new Color(225, 225, 225));
-      g2d.fillRect(570,675,160,50);
-      
-      g2d.drawImage(buttonTxt,535,330, null);
-      g2d.drawImage(instructionButtonTxt,-40,300, null);
-      g2d.drawImage(titleTxt,0,25, null);
-      
-    }
-    
-    else if ( instructions == true){ //instructions images
-        g2d.drawImage(homeBg,0,0, null);
-        g2d.drawImage(instructionPanel,65,130, null);
-        
-        g2d.setColor(new Color(31, 21, 1));
-        g2d.drawRect (40,40,150,50);
-        g2d.setColor(new Color(225, 225, 225));
-        g2d.fillRect(40,40,150,50);
-        
-        g2d.drawImage (backButtons,70,35,null);
-      }
-    
-    else if (levels == true){ //level game images
-      for(int i = 0; i<15;i++)  {  //go through every char in the map
-        for(int j = 0; j<15;j++)  { //depending on the char, paint the corresponding colour
-          if (map[i][j] == 'x')
-            g.setColor(Color.DARK_GRAY);
-          else if (map[i][j] == 'z')
-            g.setColor(Color.PINK);
-          else if (map[i][j] == 'b'){
-            g.setColor(Color.CYAN);
-            obstacleX = j* TILE_SIZE;
-            obstacleY = i * TILE_SIZE;
-          }
-          else if (map[i][j] == '0')
-            g.setColor(Color.CYAN);
-          else if (map[i][j] == 'p')
-          {
-            g.setColor(Color.GREEN);
-            spawnX = j*TILE_SIZE;
-            spawnY = i*TILE_SIZE;
-          }
-          else if (map[i][j] == 's')
-            g.setColor(Color.GREEN);
-          else if (map[i][j] == 'n')
-            g.setColor(Color.RED);
-          else if (map[i][j] == 'g')
-            g.setColor(Color.RED);
-        
-          tileX = j*TILE_SIZE;
-          tileY = i*TILE_SIZE;
-
-          g.fillRect(tileX, tileY, 50, 50);
+    for(int i = 0; i<15;i++)  { //for each element inside the 2D array, find the corresponding character and draw the appropriate tile
+      for(int j = 0; j<15;j++)  {
+        if (map[i][j] == 'x')
           g.setColor(Color.DARK_GRAY);
-          g.drawRect(tileX, tileY, 50, 50);
-          //g.drawImage(coin, coinX, coinY, null);
-          g.drawImage(obstacle, obstacleX, obstacleY, null);
-        } 
-      }
-      player.setCurrentX((spawnX + player.getX())/50.0); //images and location of images
-      player.setCurrentY((spawnY + player.getY())/50.0);
-      g.drawImage(playerSprite, (int)(player.getCurrentX()*50), (int)(player.getCurrentY()*50), null);
+        else if (map[i][j] == 'b'){ //if the character is a b, save the cordinates of the tile and assign them to obstacle x and y
+          g.setColor(Color.CYAN);
+          obstacleX = j* TILE_SIZE;
+          obstacleY = i * TILE_SIZE;
+        }
+        else if (map[i][j] == '0')
+          g.setColor(Color.CYAN);
+        else if (map[i][j] == 'p')
+        {
+          g.setColor(Color.GREEN); //similar to obstacle, save these cordinates for the spawnpoints
+          spawnX = j*TILE_SIZE;
+          spawnY = i*TILE_SIZE;
+        }
+        else if (map[i][j] == 's')
+          g.setColor(Color.GREEN);
+        else if (map[i][j] == 'g')
+          g.setColor(Color.RED);
+        
+        tileX = j*TILE_SIZE;
+        tileY = i*TILE_SIZE;
+        
+        g.fillRect(tileX, tileY, 50, 50); //draw the tile at the corresponding cordinate
+        g.setColor(Color.DARK_GRAY);
+        g.drawRect(tileX, tileY, 50, 50);
+        g.drawImage(obstacle, obstacleX, obstacleY, null);
+      } 
+    }
+    player.setCurrentX((spawnX + player.getX())/50.0); //set the current X and Y of the player to the spawnpoint + or - the players displacement
+    player.setCurrentY((spawnY + player.getY())/50.0);
+    g.drawImage(playerSprite, (int)(player.getCurrentX()*50), (int)(player.getCurrentY()*50), null); //draw the player at currentX andY
     
-      for (int i = 1; i <= player.getLives(); i++){
-        g.drawImage(heartCanister, 105 - i*15, 5, null);
+    
+    while (visibleCoin){ //generate coins
+      generateCoinX();
+      generateCoinY(); 
+      validLocation = false; //create a flag to prevent spawning in walls and obstacles
+      do{
+        validLocation = true;
+        for(int i = 0; i<15;i++)  { 
+          for(int j = 0; j<15;j++)  {
+            if (map[i][j] == 'x' || map[i][j] == 'b'){
+              if (coinX == j && coinY == i){ //if coin x and y are ever the same as i or j, it is not a valid location
+                validLocation = false;
+                generateCoinX(); //generate coinX and Y again and go through the do-while again 
+                generateCoinY();
+              }
+              else //if it never returns false, the exit the loop
+                visibleCoin = false;
+            }
+          }
+        }           
       }
-      
+      while(!validLocation);
     }
+    
+    g.drawImage(coin, coinX*50, coinY*50, null);//draw the coin
+    if (player.getCurrentX() < coinX+1 && player.getCurrentX()+1 > coinX && player.getCurrentY()+1 > coinY && player.getCurrentY() < coinY+1){
+      visibleCoin = true; //check collision with the coin, if they colide then 
+      coinCount++;
+      System.out.println(coinCount + " pokeball(s) collected"); //print each time a coin is collected
     }
+    
   }
+}
