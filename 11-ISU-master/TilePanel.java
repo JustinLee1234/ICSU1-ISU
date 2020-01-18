@@ -2,7 +2,7 @@
 //Justin Lee and Marian Wong
 //Creates the tile panel and visuals
 
-import java.awt.Color;
+import java.awt.Color; //import classes
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -22,7 +22,7 @@ import java.io.File;
 
 
 public class TilePanel extends JPanel{
-  private char map[][];
+  private char map[][]; //set and call variables and images 
   private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
   private final int MAP_HEIGHT;
@@ -51,10 +51,7 @@ public class TilePanel extends JPanel{
   private static BufferedImage backButtons;
   public boolean collidable;
 
-  
-  
-  
-  public TilePanel(char[][] map, int width, int height, Player p){
+  public TilePanel(char[][] map, int width, int height, Player p){ //refers to variables
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
@@ -69,9 +66,9 @@ public class TilePanel extends JPanel{
     this.map = map;
   }
   ///***************MAKE INTO 1 METHOD*************///
-  public void checkTileCollision(){
-    for(int i = 0; i<15;i++)  { 
-      for(int j = 0; j<15;j++)  {
+  public void checkTileCollision(){ //prevent player from crossing game border
+    for(int i = 0; i<15;i++)  { //go through the map and look for "x" char, player cannot move past "x" char
+      for(int j = 0; j<15;j++)  { //looks for location of player
         if (map[i][j] == 'x'){
           if (player.getCurrentX() < j+1 && player.getCurrentX()+1 > j && player.getCurrentY()+1 > i && player.getCurrentY() < i+1){
             if (player.getCurrentX() < j+1 && player.getCurrentX() > j){
@@ -91,7 +88,7 @@ public class TilePanel extends JPanel{
       }
     }
   }
-  public void checkGoalCollision(){
+  public void checkGoalCollision(){ // check for location of player and if it collides with goal
     for(int i = 0; i<15;i++)  { 
       for(int j = 0; j<15;j++)  {
         if (map[i][j] == 'g'){
@@ -102,7 +99,7 @@ public class TilePanel extends JPanel{
       }
     }
   }
-  public void checkObstacleCollision(){
+  public void checkObstacleCollision(){// check for location of player and if it collides with obstacle and brings it back to starting position
     for(int i = 0; i<15;i++)  { 
       for(int j = 0; j<15;j++)  {
         if (map[i][j] == 'b'){
@@ -114,7 +111,7 @@ public class TilePanel extends JPanel{
       }
     }
   }
-  public void checkCoinCollision(){
+  public void checkCoinCollision(){// check for location of player and if it collides with coins
     for(int i = 0; i<15;i++)  { 
       for(int j = 0; j<15;j++)  {
         if (map[i][j] == 'c'){
@@ -126,7 +123,7 @@ public class TilePanel extends JPanel{
   }
   //***********************************// 
     
-  public static void loadImages(){
+  public static void loadImages(){ //loading all images
     try{ 
       playerSprite = ImageIO.read(new File(".\\assets\\sprites\\playerSprite.png")); 
       heartCanister = ImageIO.read(new File(".\\assets\\sprites\\heart.png"));
@@ -141,11 +138,11 @@ public class TilePanel extends JPanel{
       backButtons = ImageIO.read(new File(".\\assets\\sprites\\backButtons.png"));
     }
     catch(Exception e){
-      System.out.println("Image file not found");
+      System.out.println("Image file not found"); //if file not found, let programmer know
     }
   }
   
-  public void paintComponent(Graphics g){
+  public void paintComponent(Graphics g){ 
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g;
     JFrame Frame = new JFrame();
@@ -153,11 +150,11 @@ public class TilePanel extends JPanel{
     super.repaint();
     setDoubleBuffered(true);
     
-    home = false;
+    home = false; //changes screen
     instructions = true;
     levels = false;
 
-    if (home == true){
+    if (home == true){ //home screen images and shapes
       g2d.drawImage(homeBg,0,0, null);
       
       g2d.setColor(new Color(31, 21, 1));
@@ -196,7 +193,7 @@ public class TilePanel extends JPanel{
       
     }
     
-    else if ( instructions == true){
+    else if ( instructions == true){ //instructions images
         g2d.drawImage(homeBg,0,0, null);
         g2d.drawImage(instructionPanel,65,130, null);
         
@@ -208,9 +205,9 @@ public class TilePanel extends JPanel{
         g2d.drawImage (backButtons,70,35,null);
       }
     
-    else if (levels == true){
-      for(int i = 0; i<15;i++)  { 
-        for(int j = 0; j<15;j++)  {
+    else if (levels == true){ //level game images
+      for(int i = 0; i<15;i++)  {  //go through every char in the map
+        for(int j = 0; j<15;j++)  { //depending on the char, paint the corresponding colour
           if (map[i][j] == 'x')
             g.setColor(Color.DARK_GRAY);
           else if (map[i][j] == 'z')
@@ -245,7 +242,7 @@ public class TilePanel extends JPanel{
           g.drawImage(obstacle, obstacleX, obstacleY, null);
         } 
       }
-      player.setCurrentX((spawnX + player.getX())/50.0);
+      player.setCurrentX((spawnX + player.getX())/50.0); //images and location of images
       player.setCurrentY((spawnY + player.getY())/50.0);
       g.drawImage(playerSprite, (int)(player.getCurrentX()*50), (int)(player.getCurrentY()*50), null);
     
