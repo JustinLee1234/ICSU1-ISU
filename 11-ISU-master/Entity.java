@@ -1,3 +1,7 @@
+//Entity
+//Justin Lee and Marian Wong
+//Entity shares its variables and methods and uses getters and setters to access private variables
+
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.awt.Image;
