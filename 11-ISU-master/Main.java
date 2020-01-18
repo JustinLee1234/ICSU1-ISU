@@ -1,11 +1,15 @@
-import java.util.Scanner;
+//Main
+//Justin Lee and Marian Wong
+//Combines all the classes into the game
+
+import java.util.Scanner; //import classes
 import java.io.File;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 public class Main{
   
   public static void main(String[] args) throws Exception{ 
-    int lineCount = 0;    
+    int lineCount = 0;    //Create and call variables to use
     Scanner mapReader;
     int height = 15;
     int width = 15;
@@ -20,11 +24,11 @@ public class Main{
     p.loadImages();
     player.setLives(5);
     
-    while (inPlay){
+    while (inPlay){ //while in play is true, the game activates
       
-      for (int map = 0;  map < numMaps; map++){
+      for (int map = 0;  map < numMaps; map++){ //Goes through each map level
         mapReader = new Scanner(new File("assets/maps/map" + (map+1) + ".txt"));
-        for(int i = 0; i < height; i++) {
+        for(int i = 0; i < height; i++) { 
           line = mapReader.next();
           for(int j = 0; j < width; j++){
             mapArray[map][i][j] = line.charAt(j);
@@ -32,7 +36,7 @@ public class Main{
         }
         mapReader.close();
       }
-      p.checkTileCollision();
+      p.checkTileCollision(); //tracks the player movement and collisions
       p.checkGoalCollision();
       p.checkObstacleCollision();
       p.checkCoinCollision();
