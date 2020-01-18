@@ -1,6 +1,6 @@
 //Main
 //Justin Lee and Marian Wong
-//Combines all the classes into the game
+//Combines all the classes 
 
 import java.util.Scanner; //import classes
 import java.io.File;
