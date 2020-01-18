@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 public class Main{
   
   public static void main(String[] args) throws Exception{ 
-    int lineCount = 0;    //Create and call variables to use
+    int lineCount = 0;    //Create and call variables and classes
     Scanner mapReader;
     int height = 15;
     int width = 15;
