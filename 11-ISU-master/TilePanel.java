@@ -22,7 +22,7 @@ import java.io.File;
 
 
 public class TilePanel extends JPanel{
-  private char map[][]; //set and call variables and images 
+  private char map[][]; //set and call variables and image variables
   private final int TILE_SIZE = 50;
   private final int MAP_WIDTH;
   private final int MAP_HEIGHT;
