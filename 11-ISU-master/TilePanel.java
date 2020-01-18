@@ -47,6 +47,8 @@ public class TilePanel extends JPanel{
   private static BufferedImage buttonTxt;
   private static BufferedImage instructionButtonTxt;
   private static BufferedImage titleTxt;
+  private static BufferedImage instructionPanel;
+  private static BufferedImage backButtons;
   public boolean collidable;
 
   
@@ -135,6 +137,8 @@ public class TilePanel extends JPanel{
       buttonTxt = ImageIO.read(new File(".\\assets\\sprites\\buttonTxt.png"));
       instructionButtonTxt = ImageIO.read(new File(".\\assets\\sprites\\instructionButtonTxt.png"));
       titleTxt = ImageIO.read(new File(".\\assets\\sprites\\titleTxt.png"));
+      instructionPanel = ImageIO.read(new File(".\\assets\\sprites\\instructionPanel.png"));
+      backButtons = ImageIO.read(new File(".\\assets\\sprites\\backButtons.png"));
     }
     catch(Exception e){
       System.out.println("Image file not found");
@@ -149,8 +153,8 @@ public class TilePanel extends JPanel{
     super.repaint();
     setDoubleBuffered(true);
     
-    home = true;
-    instructions = false;
+    home = false;
+    instructions = true;
     levels = false;
 
     if (home == true){
@@ -189,7 +193,20 @@ public class TilePanel extends JPanel{
       g2d.drawImage(buttonTxt,535,330, null);
       g2d.drawImage(instructionButtonTxt,-40,300, null);
       g2d.drawImage(titleTxt,0,25, null);
+      
     }
+    
+    else if ( instructions == true){
+        g2d.drawImage(homeBg,0,0, null);
+        g2d.drawImage(instructionPanel,65,130, null);
+        
+        g2d.setColor(new Color(31, 21, 1));
+        g2d.drawRect (40,40,150,50);
+        g2d.setColor(new Color(225, 225, 225));
+        g2d.fillRect(40,40,150,50);
+        
+        g2d.drawImage (backButtons,70,35,null);
+      }
     
     else if (levels == true){
       for(int i = 0; i<15;i++)  { 
