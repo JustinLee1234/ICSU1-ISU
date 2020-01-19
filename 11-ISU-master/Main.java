@@ -1,3 +1,7 @@
+//Main
+//Justin Lee and Marian Wong
+//Program execution start point
+
 import java.util.Scanner;
 import java.io.File;
 import java.awt.event.KeyEvent;
