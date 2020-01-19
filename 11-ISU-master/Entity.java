@@ -1,3 +1,7 @@
+//Entity
+//Justin Lee and Marian Wong
+//Entity shares its variables and methods and returns and assigns values
+
 import java.awt.image.BufferedImage;
 import javax.imageio.*;
 import java.awt.Image;
