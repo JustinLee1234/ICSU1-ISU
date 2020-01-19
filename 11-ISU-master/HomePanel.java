@@ -1,3 +1,7 @@
+//HomePanel
+//Justin Lee and Marian Wong
+//Draw all elements 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
