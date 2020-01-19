@@ -1,6 +1,6 @@
 //GameFrame
 //Justin Lee and Marian Wong
-//
+//Create the game frame
 
 import java.io.File;
 import java.util.Scanner;
