@@ -1,3 +1,7 @@
+//GameFrame
+//Justin Lee and Marian Wong
+//
+
 import java.io.File;
 import java.util.Scanner;
 import javax.swing.JFrame;
