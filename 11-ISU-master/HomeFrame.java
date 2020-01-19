@@ -1,3 +1,7 @@
+//HomeFrame
+//Justin Lee and Marian Wong
+//Create the end screen panel
+
 import java.io.File;
 import java.util.Scanner;
 import javax.swing.JFrame;
