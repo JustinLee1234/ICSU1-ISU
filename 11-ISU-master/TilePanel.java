@@ -1,3 +1,7 @@
+//TilePanel
+//Justin Lee and Marian Wong
+//Create the tile panel
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
