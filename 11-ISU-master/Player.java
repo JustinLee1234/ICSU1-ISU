@@ -1,3 +1,7 @@
+//Player
+//Justin Lee and Marian Wong
+//Dealing with the player and player movement
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
