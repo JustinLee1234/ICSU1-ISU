@@ -10,50 +10,42 @@ import javax.imageio.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent; 
 
-public class HomePanel extends JPanel{
+public class HomePanel extends JPanel{ //class for end screen panel
+  private static BufferedImage homeBg; //initialize images
+  private static BufferedImage endTxt;
+  private static BufferedImage titleTxt;
+  private final int TILE_SIZE = 50;
+  
   public HomePanel(){
+    this.setPreferredSize(new Dimension(15 * this.TILE_SIZE,15*this.TILE_SIZE)); //requests to be a certain size
   }
-  public void paintComponent(Graphics g){
+
+  public static void loadImages(){ //load images
+    try{ 
+      
+      homeBg = ImageIO.read(new File(".\\assets\\sprites\\homeScreen.png"));
+      endTxt = ImageIO.read(new File(".\\assets\\sprites\\endTxt.png"));
+      titleTxt = ImageIO.read(new File(".\\assets\\sprites\\titleTxt.png"));
+    }
+    catch(Exception e){ //if exception is caught, return message
+      System.out.println("Image file not found");
+    }
+  }
+  
+  @Override //overrides any other paint components
+  public void paintComponent(Graphics g){ //draws everything on the panel
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g;
     super.repaint();
     setDoubleBuffered(true);
+    
     g2d.drawImage(homeBg,0,0, null);
-    g2d.setColor(new Color(31, 21, 1));
-    g2d.drawRect (220,480,300,80);
-    g2d.setColor(new Color(225, 225, 225));
-    g2d.fillRect(220,480,300,80);
     
-    g2d.setColor(new Color(31, 21, 1));
-    g2d.drawRect (570,370,160,50);
-    g2d.setColor(new Color(225, 225, 225));
-    g2d.fillRect(570,370,160,50);
-    
-    g2d.setColor(new Color(31, 21, 1));
-    g2d.drawRect (570,451,160,50);
-    g2d.setColor(new Color(225, 225, 225));
-    g2d.fillRect(570,451,160,50);
-    
-    g2d.setColor(new Color(31, 21, 1));
-    g2d.drawRect (570,524,160,50);
-    g2d.setColor(new Color(225, 225, 225));
-    g2d.fillRect(570,524,160,50);
-    
-    g2d.setColor(new Color(31, 21, 1));
-    g2d.drawRect (570,600,160,50);
-    g2d.setColor(new Color(225, 225, 225));
-    g2d.fillRect(570,600,160,50);
-    
-    g2d.setColor(new Color(31, 21, 1));
-    g2d.drawRect (570,675,160,50);
-    g2d.setColor(new Color(225, 225, 225));
-    g2d.fillRect(570,675,160,50);
-    
-    g2d.drawImage(buttonTxt,535,330, null);
-    g2d.drawImage(instructionButtonTxt,-40,300, null);
+    g2d.drawImage(endTxt,-40,250, null);
     g2d.drawImage(titleTxt,0,25, null);
   }
+  
+
+  
 }

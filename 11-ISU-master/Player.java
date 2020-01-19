@@ -58,7 +58,7 @@ public class Player extends Entity implements KeyListener {
     moving = false; // default is the player is not moving
     if (movingRight ||  movingLeft || movingUp || movingDown){ //if a movement key is pressed
       count++;
-      if ((count%8) == 0){ //moving is set to true every count of 8 in order to prevent super speed
+      if ((count%3) == 0){ //moving is set to true every count of 8 in order to prevent super speed
         moving = true;
       }
     }

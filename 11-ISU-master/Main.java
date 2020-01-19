@@ -48,7 +48,7 @@ public class Main{
       }
       p.checkCollision();//constantly check for collision (inside tilePanel class)
       player.move();//constantly check for movement (inside player class)
-      if (p.coinCount == 5){//if win condition is reached, then leave game loop
+      if (p.coinCount == 30){//if win condition is reached, then leave game loop
         inPlay= false;
         gameOver = true; //begin gameOver phase
         endTime = System.currentTimeMillis(); //end the game timer

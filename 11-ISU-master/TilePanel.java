@@ -40,20 +40,20 @@ public class TilePanel extends JPanel{
   private static BufferedImage obstacle;
   private static BufferedImage coin;
   ///COIN VARIABLES///
-  public int coinX;
-  public int coinY;
+  public int coinX = 7;
+  public int coinY = 7;
   public int coinCount = 0;
   public boolean validLocation = true;
   public boolean visibleCoin = true;
   public boolean gameVisible = false;
   
   
-  public TilePanel(char[][] map, int width, int height, Player p){
+  public TilePanel(char[][] map, int width, int height, Player p){ //constructor 
     this.map = map;
     this.setPreferredSize(new Dimension(width * this.TILE_SIZE,height*this.TILE_SIZE)); //requests to be a certain size
     this.MAP_WIDTH = width;
     this.MAP_HEIGHT = height;
-    this.addKeyListener(p);
+    this.addKeyListener(p); //add key listener to wait for user inputs
     this.setFocusable(true); 
     this.grabFocus();
     this.player = p;
@@ -128,14 +128,14 @@ public class TilePanel extends JPanel{
     
     for(int i = 0; i<15;i++)  { //for each element inside the 2D array, find the corresponding character and draw the appropriate tile
       for(int j = 0; j<15;j++)  {
-        if (map[i][j] == 'x')
+        if (map[i][j] == 'x') //x character represents boundaries
           g.setColor(Color.DARK_GRAY);
         else if (map[i][j] == 'b'){ //if the character is a b, save the cordinates of the tile and assign them to obstacle x and y
           g.setColor(Color.CYAN);
           obstacleX = j* TILE_SIZE;
           obstacleY = i * TILE_SIZE;
         }
-        else if (map[i][j] == '0')
+        else if (map[i][j] == '0') // 0 represents movable area
           g.setColor(Color.CYAN);
         else if (map[i][j] == 'p')
         {
@@ -143,10 +143,8 @@ public class TilePanel extends JPanel{
           spawnX = j*TILE_SIZE;
           spawnY = i*TILE_SIZE;
         }
-        else if (map[i][j] == 's')
+        else if (map[i][j] == 's') //s represents spawn area
           g.setColor(Color.GREEN);
-        else if (map[i][j] == 'g')
-          g.setColor(Color.RED);
         
         tileX = j*TILE_SIZE;
         tileY = i*TILE_SIZE;
@@ -163,8 +161,8 @@ public class TilePanel extends JPanel{
     
     
     while (visibleCoin){ //generate coins
-      generateCoinX();
-      generateCoinY(); 
+      coinX = generateCoinX();
+      coinY = generateCoinY(); 
       validLocation = false; //create a flag to prevent spawning in walls and obstacles
       do{
         validLocation = true;

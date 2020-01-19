@@ -28,7 +28,7 @@ public class Player extends Entity implements KeyListener {
   public Player(){
     this.lives = lives;
   }  
-  
+  //getters and setters for private variables
   public void setLives(int lives){
     this.lives = lives;
   }
@@ -54,15 +54,15 @@ public class Player extends Entity implements KeyListener {
     return step;
   }
 
-  public void move(){ 
-    moving = false;
-    if (movingRight ||  movingLeft || movingUp || movingDown){
+  public void move(){  //moves the player
+    moving = false; // default is the player is not moving
+    if (movingRight ||  movingLeft || movingUp || movingDown){ //if a movement key is pressed
       count++;
-      if ((count%8) == 0){
+      if ((count%8) == 0){ //moving is set to true every count of 8 in order to prevent super speed
         moving = true;
       }
     }
-    if (moving){
+    if (moving){ //when its moving, it moves in the coresponding direction to whatever key was pressed
       if (movingRight){
         setX(getX() + getStep());
       }
@@ -83,7 +83,7 @@ public class Player extends Entity implements KeyListener {
     
   }
   
-  public void keyPressed(KeyEvent e) {
+  public void keyPressed(KeyEvent e) { //detect key press, each letter changes a boolean to true to represent direction
     int key = e.getKeyChar();
     
     if (key == 'a') {
@@ -101,7 +101,7 @@ public class Player extends Entity implements KeyListener {
     if (key == 's') {
       movingDown = true;
     }
-    if (key == 'x'){
+    if (key == 'x'){ //debugging keys
       System.out.println(this.getCurrentX());
     }
     if (key == 'y'){

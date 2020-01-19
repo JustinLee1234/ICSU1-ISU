@@ -11,6 +11,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/**
+ * [HomePanel.java]
+ * Creates and draws all aspects of the end game screen
+ */
+
 public class HomePanel extends JPanel{ //class for end screen panel
   private static BufferedImage homeBg; //initialize images
   private static BufferedImage endTxt;
@@ -18,8 +23,13 @@ public class HomePanel extends JPanel{ //class for end screen panel
   private final int TILE_SIZE = 50;
   
   public HomePanel(){
-    this.setPreferredSize(new Dimension(15 * this.TILE_SIZE,15*this.TILE_SIZE)); //requests to be a certain size
+    this.setPreferredSize(new Dimension(15 * this.TILE_SIZE,15*this.TILE_SIZE)); //set dimensions
   }
+  
+  /**
+ * loadImages()
+ * using imageIO, reads png files stored in the master folder
+ */
 
   public static void loadImages(){ //load images
     try{ 
@@ -32,6 +42,10 @@ public class HomePanel extends JPanel{ //class for end screen panel
       System.out.println("Image file not found");
     }
   }
+  /**
+ * paintComponent()
+ * draws the images onto the panel
+ */
   
   @Override //overrides any other paint components
   public void paintComponent(Graphics g){ //draws everything on the panel
